@@ -83,7 +83,6 @@ bool isDouble(std::string str)
 
 literalType detectType(std::string str)
 {
-	std::cout << str << std::endl;
 	if (str.length() == 1 && !isdigit(str[0]))
 		return TYPE_CHAR;
 	else if (isDigit(str))
@@ -124,9 +123,8 @@ void printInt(double d)
 
 }
 
-void printFloat(double d, std::string str)
+void printFloat(double d)
 {
-	(void)str;
 	float f = static_cast<float>(d); 
 	std::cout << "float: ";
 	if (f == static_cast<int>(d))
@@ -140,9 +138,8 @@ void printFloat(double d, std::string str)
 
 }
 
-void	printDouble(double d, std::string str)
+void	printDouble(double d)
 {
-	(void)str;
 	std::cout << "double: " ;
 	if (d == static_cast<int>(d))
 	{
@@ -151,8 +148,6 @@ void	printDouble(double d, std::string str)
 	}
 	else
 		std::cout << d << std::endl;
-
-
 }
 
 void ScalarConverter::convert(std::string str)
@@ -167,61 +162,54 @@ void ScalarConverter::convert(std::string str)
 	switch (litType){
 		case TYPE_CHAR :
 			c = static_cast<char>(str[0]);
-			i = static_cast<int>(c);
-			f = static_cast<float>(c);
-			d = static_cast<double>(c);
-			std::cout << "CHAR\n";
 			std::cout << "char: "   << "'" << c << "'" << std::endl;
-			std::cout << "int: "    << i << std::endl;
-			std::cout << "float: "  << f << std::endl;
-			std::cout << "double: " << d << std::endl;
+			i = static_cast<int>(c);
+			std::cout << "int: " << i << std::endl;
+			printFloat(i);
+			printDouble(i);
 			break ;
-		
 		case TYPE_INT : 
-			std::cout << "INT\n";
 			d = std::strtod(str.c_str(), NULL);
 			printChar(d);
 			printInt(d);
-			printFloat(d, str);
-			printDouble(d, str);
+			printFloat(d);
+			printDouble(d);
 			break ;
 
 		case TYPE_FLOAT : 
-			std::cout << "FLOAT\n";
 			f = std::strtof(str.c_str(), NULL);
 			d = static_cast<double>(f);
 			printChar(d);
 			printInt(d);
-			printFloat(d, str);
-			printDouble(d, str);
+			printFloat(d);
+			printDouble(d);
 			break ;
 		case TYPE_DOUBLE : 
-			std::cout << "DOUBLE\n";
 			d = std::strtod(str.c_str(), NULL);
 			printChar(d);
 			printInt(d);
-			printFloat(d, str);
-			printDouble(d, str);
+			printFloat(d);
+			printDouble(d);
 			break ;
 		case TYPE_PSEUDO_FLOAT : 
-			std::cout << "PSEUDOTYPE_PSEUDO_FLOAT\n";
 			f = strtof(str.c_str(), NULL);
 			d = static_cast<double>(f);
 			
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
-			std::cout << std::showpos;
+			if (str != "nanf")
+				std::cout << std::showpos;
 			std::cout << "float: "  << f << "f" << std::endl;
 			std::cout << "double: " << d << std::endl;
 			std::cout << std::noshowpos;
 			break ;
 
 		case TYPE_PSEUDO_DOUBLE : 
-			std::cout << "PSEUDOTYPE_PSEUDO_DOUBLE\n";
 			d = strtod(str.c_str(), NULL);
 			std::cout << "char: impossible" << std::endl;
 			std::cout << "int: impossible" << std::endl;
-			std::cout << std::showpos;
+			if (str != "nan")
+				std::cout << std::showpos;
 			std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
 			std::cout << "double: " << d << std::endl;
 			std::cout << std::noshowpos;
